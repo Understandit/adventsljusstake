@@ -1,0 +1,318 @@
+@import "retina-1.1.0.less";
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "helvetica neue",arial, sans-serif;
+  height: 100%;
+  background: #44290e url(img/bg.jpg) no-repeat center center;
+  background-size: cover;
+}
+
+#wrapper {
+  width: 900px;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+
+
+/*---------------------------------------------------------
+  Candles
+---------------------------------------------------------*/
+/* Candles wrapper */
+#candles {
+  position: absolute;
+  top: 60px;
+  width: 90%;
+  bottom: 189px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+/* A candle! */
+.candle {
+  position: absolute;
+  z-index: 50;
+  bottom: 0px;
+  width: 95px;
+  height: 100%;//new height when lit is set with javascript
+  min-height: 130px;
+  
+  .candle-top {
+    position: absolute;
+    z-index: 55;
+    left: 0px;
+    top: 0px;
+    height: 100px;
+    width: 100%;
+    //background: transparent url(img/candle-top.png) no-repeat left top;
+    .at2x('img/candle-top.png', 95px, 100px);
+    background-repeat: no-repeat;
+    background-position: left top;
+  }
+  
+  .candle-body {
+    position: absolute;
+    z-index: 60;
+    left: 0px;
+    width: 100%;
+    top: 100px;
+    bottom: 0px;
+    //background: transparent url(img/candle-body.png) repeat-y left top;
+    .at2x('img/candle-body.png', 95px, 50px);
+    background-repeat: repeat-y;
+    background-position: left top;
+    overflow: hidden;
+  }
+  
+  /* Do stuff when lit */
+  &.lit {
+    .candle-top {
+      //background: transparent url(img/candle-top-lit.png) no-repeat left bottom;
+      .at2x('img/candle-top-lit.png', 95px, 50px);
+      background-repeat: no-repeat;
+      background-position: left bottom;
+    }
+    
+    /* Drop */
+    @-webkit-keyframes drop {
+      0% {
+        height: 0%;
+      }
+      20% {
+        height: 20%;
+      }
+      22% {
+        height: 20%;
+      }
+      25% {
+        height: 22%;
+      }
+      27% {
+        height: 26%;
+      }
+      32% {
+        height: 40%;
+      }
+      35% {
+        height: 40%;
+      }
+      50% {
+        height: 60%;
+      }
+      55% {
+        height: 63%;
+      }
+      60% {
+        height: 75%;
+      }
+      63% {
+        height: 75%;
+      }
+      80% {
+        height: 90%;
+      }
+      82% {
+        height: 93%;
+      }
+      90% {
+        height: 100%;
+      }
+      95% {
+        height: 100%;
+        opacity: 1;
+      }
+      100% {
+        height: 100%;
+        opacity: 0;
+      }
+    }
+    
+    &:before {
+      -webkit-animation: drop 40s linear 1s infinite;
+      display: block;
+      content: "";
+      position: absolute;
+      z-index: 75;
+      left: 20px;
+      top: 100px;
+      width: 21px;
+      height: 0%;
+      opacity: 0.3;
+      .at2x('img/drop.png', 21px, 337px);
+      background-repeat: no-repeat;
+      background-position: center bottom;
+    }
+    
+    .candle-body:before {
+      //-webkit-animation: glow 1.5s ease-in-out 0s infinite alternate;
+      display: block;
+      content: "";
+      position: absolute;
+      z-index: 65;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 200px;
+      //background: transparent url(img/candle-lit.png) no-repeat center top;
+      .at2x('img/candle-lit.png', 81px, 200px);
+      background-repeat: no-repeat;
+      background-position: center top;
+    }
+  }
+  
+  /* Quick and dirty candle placement */
+  &#first {
+    left: 0%;
+  }
+  &#second {
+    left: 30%;
+    
+    &.lit {
+      &:before {
+        left: 50px;
+        -webkit-animation-delay: 4s;
+      }
+    }
+  }
+  &#third {
+    right: 30%;
+    
+    &.lit {
+      &:before {
+        left: 30px;
+        -webkit-animation-delay: 2s;
+      }
+    }
+  }
+  &#fourth {
+    right: 0%;
+    
+    &.lit {
+      &:before {
+        left: 70px;
+        -webkit-animation-delay: 4.5s;
+      }
+    }
+  }
+}
+
+
+
+/*---------------------------------------------------------
+  Flame
+---------------------------------------------------------*/
+/* Animate the flame */
+@-webkit-keyframes flame {
+  0% {
+    -webkit-transform: scaleY(1) skew(2deg);
+    opacity: 1;
+  }
+  50% {
+    -webkit-transform: scaleY(0.95) skew(-1deg);
+    opacity: 0.9;
+  }
+  100% {
+    -webkit-transform: scaleY(1.05) skew(1.2deg);
+    opacity: 0.95;
+  }
+}
+
+/* Animate the glow */
+@-webkit-keyframes glow {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.65;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+/* Basic flame settings */
+.flame {
+  position: absolute;
+  z-index: 100;
+  top: -20px;
+  left: 50%;
+  margin-left: -22px;
+  width: 47px;
+  height: 94px;
+  opacity: 1;
+}
+
+/* Stuff that happens when candle is lit */
+.lit {
+  .flame {
+    -webkit-animation: flame 2s ease-in-out 0s infinite alternate;
+    -webkit-transform-origin-y: bottom;
+    //background: transparent url(img/flame.png) no-repeat left top;
+    .at2x('img/flame.png', 47px, 94px);
+    background-repeat: no-repeat;
+    background-position: left top;
+    
+    &:before {
+      -webkit-animation: glow 1.5s ease-in-out 0s infinite alternate;
+      display: block;
+      content: "";
+      position: absolute;
+      left: -4px;
+      top: 20px;
+      z-index: 110;
+      width: 53px;
+      height: 85px;
+      //background: transparent url(img/glow.png) no-repeat left top;
+      .at2x('img/glow.png', 53px, 85px);
+      background-repeat: no-repeat;
+      background-position: left top;
+      
+    }
+  }
+}
+
+
+
+
+/*---------------------------------------------------------
+  Candle holder
+---------------------------------------------------------*/
+#holder {
+  position: absolute;
+  z-index: 200;
+  width: 100%;
+  height: 277px;
+  bottom: 0px;
+  //background:transparent url(img/holder.png) no-repeat left top;
+  .at2x('img/holder.png', 900px, 277px);
+  background-repeat: no-repeat;
+  background-position: left top;
+  
+  #days-left {
+    position: absolute;
+    bottom: 15px;
+    text-align: center;
+    width: 100%;
+    font-size: 100px;
+    line-height: 1em;
+    font-weight: bold;
+    color: rgba(185, 103, 44, 0.8);
+    text-shadow: 0 1px 1px rgba(254, 229, 154, 0.3);
+    
+    span {
+      display: block;
+      text-align: center;
+      font-size: 32px;
+      line-height: 1.1em;
+    }
+    
+    .single {
+      margin-bottom: 23px;
+    }
+  }
+}
