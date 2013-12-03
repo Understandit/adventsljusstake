@@ -1,3 +1,3 @@
 Adventljusstake!
 
-(c) Olof Brickarp, Understandit 2013
+(c) Olof Brickarp 2013
